@@ -5,14 +5,19 @@ import TrelloActionButton from './TrelloActionButton';
 
 class App extends Component {
   render() {
-    const { lists } = this.props;
+    const { lists, cards } = this.props;
     return (
       <div className="App">
         <header className="App-header">
           <h1>Hello</h1>
           <div style={styles.listsContainer}>
-            {lists.map(({ id, title, cards }) => (
-              <TrelloList key={id} title={title} cards={cards} />
+            {lists.map(({ id, title }) => (
+              <TrelloList
+                key={id}
+                id={id}
+                title={title}
+                cards={cards.filter(({ listId }) => listId === id)}
+              />
             ))}
             <TrelloActionButton list />
           </div>
@@ -29,8 +34,9 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ lists }) => ({
+const mapStateToProps = ({ lists, cards }) => ({
   lists,
+  cards,
 });
 
 export default connect(mapStateToProps)(App);

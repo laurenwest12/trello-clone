@@ -4,7 +4,8 @@ import uuid from 'react-uuid';
 
 import { Icon, Card, Button } from '@material-ui/core/';
 import TextArea from 'react-textarea-autosize';
-import { addList } from '../reducers/listsReducer';
+import { addList } from '../actions/listsActions';
+import { addCard } from '../actions/cardsActions';
 
 class TrelloActionButton extends React.Component {
   state = {
@@ -19,11 +20,25 @@ class TrelloActionButton extends React.Component {
   };
 
   handleSubmit = (e) => {
+    const { list } = this.props;
     e.preventDefault();
-    this.props.addList({
-      title: this.state.text,
-      id: uuid(),
-    });
+
+    list
+      ? this.props.addList({
+          title: this.state.text,
+          id: uuid(),
+        })
+      : this.props.addCard({
+          id: uuid(),
+          text: this.state.text,
+          listId: this.props.id,
+        });
+    // : this.props.addCard({
+    //     id: uuid(),
+    //     text: this.state.text,
+    //     listId: this.props.id,
+    //   });
+
     this.setState({
       formOpen: false,
       text: '',
@@ -67,7 +82,7 @@ class TrelloActionButton extends React.Component {
   };
 
   renderForm = () => {
-    const { list } = this.props;
+    const { id, list } = this.props;
 
     const placeholder = list
       ? 'Enter list title'
@@ -139,6 +154,7 @@ const styles = {
 const mapDispatchToProps = (dispatch) => {
   return {
     addList: (list) => dispatch(addList(list)),
+    addCard: (card) => dispatch(addCard(card)),
   };
 };
 
