@@ -6,9 +6,8 @@ const TrelloList = ({ title, cards }) => {
   return (
     <div style={styles.container}>
       <h4>{title}</h4>
-      {cards.map(({ id, text }) => (
-        <TrelloCard key={id} text={text} />
-      ))}
+      {cards &&
+        cards.map(({ id, text }) => <TrelloCard key={id} text={text} />)}
       <TrelloActionButton />
     </div>
   );

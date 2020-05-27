@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import uuid from 'react-uuid';
+
 import { Icon, Card, Button } from '@material-ui/core/';
 import TextArea from 'react-textarea-autosize';
+import { addList } from '../reducers/listsReducer';
 
 class TrelloActionButton extends React.Component {
   state = {
@@ -11,6 +15,18 @@ class TrelloActionButton extends React.Component {
   handleChange = ({ target }) => {
     this.setState({
       text: target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.addList({
+      title: this.state.text,
+      id: uuid(),
+    });
+    this.setState({
+      formOpen: false,
+      text: '',
     });
   };
 
@@ -70,7 +86,7 @@ class TrelloActionButton extends React.Component {
           <TextArea
             placeholder={placeholder}
             autoFocus
-            onBlur={() => this.closeForm()}
+            // onBlur={() => this.closeForm()}
             value={this.state.text}
             onChange={this.handleChange}
             style={{
@@ -87,6 +103,7 @@ class TrelloActionButton extends React.Component {
           <Button
             variant="contained"
             style={{ color: 'white', backgroundColor: '#5aac44' }}
+            onClick={this.handleSubmit}
           >
             {buttonTitle}
           </Button>
@@ -119,4 +136,10 @@ const styles = {
   },
 };
 
-export default TrelloActionButton;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addList: (list) => dispatch(addList(list)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TrelloActionButton);
