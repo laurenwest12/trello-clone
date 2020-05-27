@@ -9,14 +9,23 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>Hello</h1>
-          {lists.map(({ id, title, cards }) => (
-            <TrelloList key={id} title={title} cards={cards} />
-          ))}
+          <div style={styles.listsContainer}>
+            {lists.map(({ id, title, cards }) => (
+              <TrelloList key={id} title={title} cards={cards} />
+            ))}
+          </div>
         </header>
       </div>
     );
   }
 }
+
+const styles = {
+  listsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+};
 
 const mapStateToProps = ({ lists }) => ({
   lists,
