@@ -1,4 +1,5 @@
 import { ADD_LIST } from '../actions/listsActions';
+import { DRAG_CARD } from '../actions/cardsActions';
 
 const initialState = [
   {
@@ -19,6 +20,24 @@ export const listsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_LIST:
       return [...state, action.list];
+    case DRAG_CARD:
+      const {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexEnd,
+        droppableIndexStart,
+        draggableId,
+      } = action.payload;
+      const newState = [...state];
+
+      //in the same list
+      if (droppableIdStart === droppableIdEnd) {
+        console.log(state);
+        console.log(droppableIdStart);
+        const list = state.find((list) => droppableIdStart === list.id);
+        const card = list.cards.splice(droppableIndexStart);
+        list.cards.splice(droppableIndexEnd, 0, ...card);
+      }
     default:
       return state;
   }
