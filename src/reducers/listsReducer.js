@@ -8,17 +8,14 @@ const initialState = [
       {
         id: '7b892e66-a07a-11ea-bb37-0242ac130002',
         text: 'This is an example of a card',
-        listId: '95e8d4c8-a07a-11ea-bb37-0242ac130002',
       },
       {
         id: '8283893c-a07a-11ea-bb37-0242ac130002',
         text: 'This is an example of a card',
-        listId: '95e8d4c8-a07a-11ea-bb37-0242ac130002',
       },
       {
         id: '8572a8ee-a07a-11ea-bb37-0242ac130002',
         text: 'This is an example of a card',
-        listId: '95e8d4c8-a07a-11ea-bb37-0242ac130002',
       },
     ],
   },
@@ -34,7 +31,6 @@ const initialState = [
       {
         id: '8d0c9aa6-a07a-11ea-bb37-0242ac130002',
         text: 'This is an example of a card',
-        listId: '9a5c5bf6-a07a-11ea-bb37-0242ac130002',
       },
     ],
   },
@@ -72,6 +68,18 @@ export const listsReducer = (state = initialState, action) => {
         const list = draggedState.find((list) => droppableIdStart === list.id);
         const card = list.cards.splice(droppableIndexStart, 1);
         list.cards.splice(droppableIndexEnd, 0, ...card);
+      }
+
+      if (droppableIdStart !== droppableIdEnd) {
+        const listStart = draggedState.find(
+          (list) => droppableIdStart === list.id
+        );
+
+        const card = listStart.cards.splice(droppableIndexStart, 1);
+
+        const listEnd = draggedState.find((list) => droppableIdEnd === list.id);
+
+        listEnd.cards.splice(droppableIndexEnd, 0, ...card);
       }
 
       return draggedState;

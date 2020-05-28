@@ -32,13 +32,8 @@ class App extends Component {
           <header className="App-header">
             <h1>Hello</h1>
             <div style={styles.listsContainer}>
-              {lists.map(({ id, title }) => (
-                <TrelloList
-                  key={id}
-                  id={id}
-                  title={title}
-                  cards={cards.filter(({ listId }) => listId === id)}
-                />
+              {lists.map(({ id, title, cards }) => (
+                <TrelloList key={id} id={id} title={title} cards={cards} />
               ))}
               <TrelloActionButton list />
             </div>
@@ -58,7 +53,6 @@ const styles = {
 
 const mapStateToProps = ({ lists }) => ({
   lists,
-  cards: lists.map((list) => list.cards).flat(),
 });
 
 export default connect(mapStateToProps)(App);
