@@ -3,12 +3,11 @@ import TrelloList from './TrelloList';
 import { connect } from 'react-redux';
 import TrelloActionButton from './TrelloActionButton';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { sortCard } from '../actions/cardsActions';
+import { sortCard } from '../actions/listsActions';
 
 class App extends Component {
   onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
-    console.log(destination);
 
     if (!destination) {
       return;
@@ -27,7 +26,6 @@ class App extends Component {
 
   render() {
     const { lists, cards } = this.props;
-
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="App">
@@ -58,9 +56,9 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ lists, cards }) => ({
+const mapStateToProps = ({ lists }) => ({
   lists,
-  cards,
+  cards: lists.map((list) => list.cards).flat(),
 });
 
 export default connect(mapStateToProps)(App);

@@ -4,13 +4,13 @@ import uuid from 'react-uuid';
 
 import { Icon, Card, Button } from '@material-ui/core/';
 import TextArea from 'react-textarea-autosize';
-import { addList } from '../actions/listsActions';
-import { addCard } from '../actions/cardsActions';
+import { addList, addCard } from '../actions/listsActions';
 
 class TrelloActionButton extends React.Component {
   state = {
     formOpen: false,
     text: '',
+    cards: [],
   };
 
   handleChange = ({ target }) => {
@@ -27,17 +27,13 @@ class TrelloActionButton extends React.Component {
       ? this.props.addList({
           title: this.state.text,
           id: uuid(),
+          cards: [],
         })
       : this.props.addCard({
           id: uuid(),
           text: this.state.text,
           listId: this.props.id,
         });
-    // : this.props.addCard({
-    //     id: uuid(),
-    //     text: this.state.text,
-    //     listId: this.props.id,
-    //   });
 
     this.setState({
       formOpen: false,
