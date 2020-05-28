@@ -101,7 +101,7 @@ class TrelloActionButton extends React.Component {
           <TextArea
             placeholder={placeholder}
             autoFocus
-            // onBlur={() => this.closeForm()}
+            onBlur={() => this.closeForm()}
             value={this.state.text}
             onChange={this.handleChange}
             style={{
@@ -118,7 +118,7 @@ class TrelloActionButton extends React.Component {
           <Button
             variant="contained"
             style={{ color: 'white', backgroundColor: '#5aac44' }}
-            onClick={this.handleSubmit}
+            onMouseDown={this.handleSubmit}
           >
             {buttonTitle}
           </Button>

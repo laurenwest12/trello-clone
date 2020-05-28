@@ -3,11 +3,11 @@ import { ADD_LIST } from '../actions/listsActions';
 const initialState = [
   {
     title: 'First List',
-    id: 0,
+    id: '95e8d4c8-a07a-11ea-bb37-0242ac130002',
   },
   {
     title: 'Second List',
-    id: 1,
+    id: '9a5c5bf6-a07a-11ea-bb37-0242ac130002',
   },
 ];
 
